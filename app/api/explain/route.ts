@@ -4,30 +4,27 @@ import { buildPrompt } from "@/lib/prompt";
 
 export async function POST(req: Request) {
   try {
-    const { concept, theme, level, style } = await req.json();
+    const body = await req.json();
+    const { concept, theme, level, style } = body;
 
     if (!concept || !theme || !level) {
-      return NextResponse.json(
-        { error: "Missing required fields" },
-        { status: 400 }
-      );
+      return NextResponse.json({ error: "Missing required fields" }, { status: 400 });
     }
 
     const genAI = getGeminiClient();
     const prompt = buildPrompt({ concept, theme, level, style });
 
+    // IMPORTANT: use structured contents (works reliably)
     const response = await genAI.models.generateContent({
-      model: "gemini-2.0-flash",
-      contents: prompt,
+      model: "gemini-2.5-flash-lite",
+      contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    const text = response.text;
-
-    return NextResponse.json({ text });
-
+    return NextResponse.json({ text: response.text });
   } catch (err: unknown) {
+    console.error("EXPLAIN API ERROR:", err);
     return NextResponse.json(
-      { error: "Internal Server Error" },
+      { error: err instanceof Error ? err.message : "Internal Server Error" },
       { status: 500 }
     );
   }
