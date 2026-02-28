@@ -18,3 +18,12 @@ export type Style =
 export interface ExplainResponse {
     text: string;
 }
+
+export interface ExplanationDoc {
+    concept: string;
+    theme: string;
+    level: string;
+    style?: string;
+    text: string;
+    createdAt: string;
+}

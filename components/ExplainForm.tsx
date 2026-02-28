@@ -28,6 +28,7 @@ export default function ExplainForm() {
   const [theme, setTheme] = useState<ThemeKey>("minecraft");
   const [level, setLevel] = useState<Level>("high-school");
   const [style, setStyle] = useState<Style>("fun");
+  const [shareURL, setShareURL] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<string>("");
@@ -37,6 +38,34 @@ export default function ExplainForm() {
     () => THEMES.find((t) => t.key === theme),
     [theme]
   );
+
+  async function saveShare() {
+    if (!output) return;
+
+    setError("");
+    setShareURL("");
+    try {
+      const res = await fetch("/api/save", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          concept,
+          theme: themeMeta?.label ?? theme,
+          level,
+          style,
+          text: output,
+        }),
+      });
+
+      const data = await res.json();
+      if (!res.ok) throw new Error(data?.error || "Request failed");
+
+      const url = `${window.location.origin}/share/${data.id}`;
+      setShareURL(url);
+    } catch (e: unknown) {
+      setError(e instanceof Error ? e.message : "Something went wrong");
+    }
+  } 
 
   async function generate() {
     setError("");
@@ -172,6 +201,17 @@ export default function ExplainForm() {
           >
             Reset
           </button>
+
+          <button
+          type="button"
+          onClick={saveShare}
+          disabled={!output}
+          className={[
+            "px-5 py-3 rounded-xl border transition",
+            output ? "border-gray-200 hover:bg-gray-50" : "border-gray-100 text-gray-400",
+          ].join(" ")}>
+            Save & Share
+          </button>
         </div>
 
         {loading && (
@@ -179,6 +219,15 @@ export default function ExplainForm() {
             <div className="animate-pulse">
               Gemini is cooking your analogy… 🍳✨
             </div>
+          </div>
+        )}
+
+        {shareURL && (
+          <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
+            <p className="text-sm text-gray-600">Share Link:</p>
+            <a className="text-sm font-medium underline" href={shareURL} target="_blank">
+              {shareURL}
+            </a>
           </div>
         )}
       </div>
