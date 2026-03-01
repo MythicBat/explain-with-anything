@@ -20,7 +20,7 @@ export async function POST(req: Request) {
       contents: [{ role: "user", parts: [{ text: prompt }] }],
     });
 
-    return NextResponse.json({ text: response.text });
+    return NextResponse.json({ text: response.text, style});
   } catch (err: unknown) {
     console.error("EXPLAIN API ERROR:", err);
     return NextResponse.json(

@@ -22,8 +22,19 @@ export interface ExplainResponse {
 export interface ExplanationDoc {
     concept: string;
     theme: string;
+    themeKey: string;
     level: string;
     style?: string;
     text: string;
     createdAt: string;
+}
+
+export interface ComicPanel {
+    caption: string;
+    dialogue: string;
+}
+
+export interface ComicPayload {
+    title: string;
+    panels: ComicPanel[];   // expecting 6
 }

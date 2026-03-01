@@ -6,6 +6,9 @@ import ResultCard from "./ResultCard";
 import { ThemeKey } from "@/lib/themes";
 import { getThemeMeta } from "@/lib/themes";
 import type { ExplainInput, Level, Style } from "@/lib/types";
+import ComicGrid from "./ComicGrid";
+import { safeParseJson } from "@/lib/safeJson";
+import type { ComicPayload } from "@/lib/types";
 
 const LEVELS: { key: Level; label: string }[] = [
   { key: "kid", label: "Kid" },
@@ -30,6 +33,7 @@ export default function ExplainForm() {
   const [level, setLevel] = useState<Level>("high-school");
   const [style, setStyle] = useState<Style>("fun");
   const [shareURL, setShareURL] = useState<string>("");
+  const [responseStyle, setResponseStyle] = useState<string>("");
 
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<string>("");
@@ -52,6 +56,7 @@ export default function ExplainForm() {
         body: JSON.stringify({
           concept,
           theme: themeMeta?.label ?? theme,
+          themeKey: theme,
           level,
           style,
           text: output,
@@ -98,6 +103,7 @@ export default function ExplainForm() {
         throw new Error(data?.error || "Request failed");
       }
 
+      setResponseStyle(data.style || "");
       setOutput(data.text);
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Something went wrong");
@@ -248,7 +254,27 @@ export default function ExplainForm() {
         )}
       </div>
 
-      {output && <ResultCard text={output} onCopy={copy} />}
+      {output && responseStyle === "comic" ? (
+        (() => {
+          const parsed = safeParseJson<ComicPayload>(output);
+          if(!parsed.ok) {
+            return (
+              <div className="mt-6 rounded-2xl border border-red-200 bg-white p-5">
+                <p className="text-sm text-red-600 font-medium">Comic Parsing failed</p>
+                <p className="text-sm text-gray-600 mt-2">
+                  Gemini returned something that was not a valid JSON. Try again.
+                </p>
+                <pre className="mt-3 text-xs bg-gray-50 border border-gray-200 rounded-xl p-3 overflow-auto">
+                  {output}
+                </pre>
+              </div>
+            );
+          }
+          return <ComicGrid comic={parsed.value} />;
+        })()
+      ) : (
+        <ResultCard text={output} onCopy={copy} />
+      )}
     </div>
   );
 }
