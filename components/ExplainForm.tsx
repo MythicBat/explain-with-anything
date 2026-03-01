@@ -3,7 +3,8 @@
 import { useMemo, useState } from "react";
 import ThemeChips from "./ThemeChips";
 import ResultCard from "./ResultCard";
-import { ThemeKey, THEMES } from "@/lib/themes";
+import { ThemeKey } from "@/lib/themes";
+import { getThemeMeta } from "@/lib/themes";
 import type { ExplainInput, Level, Style } from "@/lib/types";
 
 const LEVELS: { key: Level; label: string }[] = [
@@ -35,7 +36,7 @@ export default function ExplainForm() {
   const [error, setError] = useState<string>("");
 
   const themeMeta = useMemo(
-    () => THEMES.find((t) => t.key === theme),
+    () => getThemeMeta(theme),
     [theme]
   );
 
@@ -112,11 +113,17 @@ export default function ExplainForm() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className="rounded-2xl border border-gray-200 bg-white shadow-sm p-5">
+      <div className={`rounded-2xl border border-gray-200 bg-gradient-to-br ${themeMeta.bg} shadow-sm p-5`}>
         <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
         <p className="text-gray-600 mt-1">
           Turn any concept into a fun analogy with one click.
         </p>
+
+        <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs border border-gray-200">
+          <span>{themeMeta.emoji}</span>
+          <span className="font-medium">{themeMeta.label}</span>
+          <span className="text-gray-500">{themeMeta.vibe}</span>
+        </div>
 
         <div className="mt-5">
           <label className="text-sm font-medium text-gray-700">
@@ -223,11 +230,20 @@ export default function ExplainForm() {
         )}
 
         {shareURL && (
-          <div className="mt-4 rounded-xl border border-gray-200 bg-white p-4">
-            <p className="text-sm text-gray-600">Share Link:</p>
-            <a className="text-sm font-medium underline" href={shareURL} target="_blank">
-              {shareURL}
-            </a>
+          <div className="mt-4 rounded-2xl border border-gray-200 bg-white/70 p-4">
+            <p className="text-xs text-gray-600">Share Link:</p>
+            <div className="mt-2 flex gap-2 items-center">
+              <input
+                value={shareURL}
+                readOnly
+                className="w-full rounded-xl border border-gray-200 px-3 py-2 text-sm bg-white"/>
+              <button
+                onClick={() => navigator.clipboard.writeText(shareURL)}
+                className="px-4 py-2 rounded-xl bg-black text-white text-sm"
+                type="button">
+                Copy
+                </button>
+            </div>
           </div>
         )}
       </div>
