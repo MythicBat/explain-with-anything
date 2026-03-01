@@ -1,9 +1,15 @@
 import { getFirestoreAdmin } from "@/lib/firebaseAdmin";
 import type { ExplanationDoc } from "@/lib/types";
 
-export default async function SharePage({ params }: { params: { id: string } }) {
+export default async function SharePage({
+  params,
+}: {
+  params: Promise<{ id: string }>;
+}) {
+  const { id } = await params; // unwrap params
+
   const db = getFirestoreAdmin();
-  const snap = await db.collection("explanations").doc(params.id).get();
+  const snap = await db.collection("explanations").doc(id).get();
 
   if (!snap.exists) {
     return (
