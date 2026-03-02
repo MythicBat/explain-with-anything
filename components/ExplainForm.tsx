@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useRef } from "react";
 import ThemeChips from "./ThemeChips";
 import ResultCard from "./ResultCard";
 import { ThemeKey } from "@/lib/themes";
@@ -10,6 +10,7 @@ import ComicGrid from "./ComicGrid";
 import { safeParseJson } from "@/lib/safeJson";
 import type { ComicPayload } from "@/lib/types";
 import { normalizeComic } from "@/lib/comicNormalize";
+import { downloadNodeAsPng } from "@/lib/downloadCard";
 
 const LEVELS: { key: Level; label: string }[] = [
   { key: "kid", label: "Kid" },
@@ -44,6 +45,8 @@ export default function ExplainForm() {
     () => getThemeMeta(theme),
     [theme]
   );
+
+  const exportRef = useRef<HTMLDivElement | null>(null);
 
   async function saveShare() {
     if (!output) return;
@@ -226,6 +229,18 @@ export default function ExplainForm() {
           ].join(" ")}>
             Save & Share
           </button>
+
+          <button
+            type="button"
+            disabled={!output || loading}
+            onClick={async () => {
+              if (!exportRef.current) return;
+              const name = responseStyle === "comic" ? "comic.png" : "explanation.png";
+              await downloadNodeAsPng(exportRef.current, name);
+            }}
+            className="px-5 py-3 rounded-xl border border-gray-200 hover:bg-white/70 diabled:opacity-50">
+              Download 📸
+            </button>
         </div>
 
         {loading && (
