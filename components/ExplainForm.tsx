@@ -9,6 +9,7 @@ import type { ExplainInput, Level, Style } from "@/lib/types";
 import ComicGrid from "./ComicGrid";
 import { safeParseJson } from "@/lib/safeJson";
 import type { ComicPayload } from "@/lib/types";
+import { normalizeComic } from "@/lib/comicNormalize";
 
 const LEVELS: { key: Level; label: string }[] = [
   { key: "kid", label: "Kid" },
@@ -270,7 +271,8 @@ export default function ExplainForm() {
               </div>
             );
           }
-          return <ComicGrid comic={parsed.value} />;
+          const normalized = normalizeComic(parsed.value);
+          return <ComicGrid comic={normalized} />;
         })()
       ) : (
         <ResultCard text={output} onCopy={copy} />
