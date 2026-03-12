@@ -38,3 +38,20 @@ export interface ComicPayload {
     title: string;
     panels: ComicPanel[];   // expecting 6
 }
+
+export type ChatRole = "user" | "assistant";
+
+export interface ChatMessage {
+    role: ChatRole;
+    text: string;
+}
+
+export interface TutorRequest {
+    messages: ChatMessage[];
+    theme: string;
+    level: string;
+}
+
+export interface TutorResponse {
+    reply: string;
+}
