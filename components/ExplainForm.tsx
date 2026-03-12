@@ -123,7 +123,7 @@ export default function ExplainForm() {
 
   return (
     <div className="w-full max-w-3xl mx-auto">
-      <div className={`rounded-2xl border border-gray-200 bg-gradient-to-br ${themeMeta.bg} shadow-sm p-5`}>
+      <div className={`rounded-2xl border border-gray-200 bg-linear-to-br ${themeMeta.bg} shadow-sm p-5`}>
         <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
         <p className="text-gray-600 mt-1">
           Turn any concept into a fun analogy with one click.
