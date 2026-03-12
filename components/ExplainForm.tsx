@@ -270,28 +270,33 @@ export default function ExplainForm() {
         )}
       </div>
 
-      {output && responseStyle === "comic" ? (
-        (() => {
-          const parsed = safeParseJson<ComicPayload>(output);
-          if(!parsed.ok) {
-            return (
-              <div className="mt-6 rounded-2xl border border-red-200 bg-white p-5">
-                <p className="text-sm text-red-600 font-medium">Comic Parsing failed</p>
-                <p className="text-sm text-gray-600 mt-2">
-                  Gemini returned something that was not a valid JSON. Try again.
-                </p>
-                <pre className="mt-3 text-xs bg-gray-50 border border-gray-200 rounded-xl p-3 overflow-auto">
-                  {output}
-                </pre>
-              </div>
-            );
-          }
-          const normalized = normalizeComic(parsed.value);
-          return <ComicGrid comic={normalized} />;
-        })()
-      ) : (
-        <ResultCard text={output} onCopy={copy} />
-      )}
+      {output && (
+          <div ref={exportRef}>
+            {responseStyle === "comic" ? (
+              (() => {
+                const parsed = safeParseJson<ComicPayload>(output);
+
+                if (!parsed.ok) {
+                  return (
+                    <div className="mt-6 rounded-2xl border border-red-200 bg-white p-5">
+                    <p className="text-sm text-red-600 font-medium">
+                       Comic parsing failed
+                    </p>
+                    <pre className="mt-3 text-xs bg-gray-50 border border-gray-200 rounded-xl p-3 overflow-auto">
+                      {output}
+                    </pre>
+          </div>
+        );
+      }
+
+      const normalized = normalizeComic(parsed.value);
+        return <ComicGrid comic={normalized} />;
+    })()
+  ) : (
+      <ResultCard text={output} onCopy={copy} />
+  )}
+  </div>
+)}
     </div>
   );
 }
