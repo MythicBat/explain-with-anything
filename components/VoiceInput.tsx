@@ -4,6 +4,7 @@ import { useRef, useState } from "react";
 
 type Props = {
     onTranscript: (text: string) => void;
+    autoSend?: boolean;
 };
 
 type SpeechRecognitionEventLike = {
@@ -37,7 +38,7 @@ declare global {
     }
 }
 
-export default function VoiceInput({onTranscript}: Props) {
+export default function VoiceInput({ onTranscript }: Props) {
     const [listening, setListening] = useState(false);
     const recognitionRef = useRef<SpeechRecognitionLike | null>(null);
 
@@ -55,10 +56,12 @@ export default function VoiceInput({onTranscript}: Props) {
         recognition.maxAlternatives = 1;
 
         recognition.onstart = () => setListening(true);
+
         recognition.onresult = (event) => {
             const transcript = event.results[0][0].transcript;
             onTranscript(transcript);
         };
+
         recognition.onerror = () => setListening(false);
         recognition.onend = () => setListening(false);
 
@@ -74,13 +77,12 @@ export default function VoiceInput({onTranscript}: Props) {
     return (
         <button
             type="button"
-            onClick={listening ? stopListening: startListening}
-            className={`px-4 py-3 rounded-xl border ${
-                listening
-                    ? "bg-red-500 text-white border-red-500"
-                    : "bg-white border-gray-200 hover:bg-gray-50"
-            }`}>
-            {listening ? "Stop 🎙️" : "Speak 🎤"}
+            onClick={listening ? stopListening : startListening}
+            className={`h-[50px] w-[50px] rounded-xl border flex items-center justify-center text-lg transition ${
+                listening ? "bg-red-500 text-white border-red-500" : "bg-white border-gray-200 hover:bg-gray-50"}`}
+                title={listening ? "Stop recording" : "Start recording"}
+            >
+            {listening ? "🔴" : "🎤"}
         </button>
     );
 }

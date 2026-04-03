@@ -11,6 +11,8 @@ import { safeParseJson } from "@/lib/safeJson";
 import type { ComicPayload } from "@/lib/types";
 import { normalizeComic } from "@/lib/comicNormalize";
 import { downloadNodeAsPng } from "@/lib/downloadCard";
+import VoiceInput from "./VoiceInput";
+import FollowUpChat from "./FollowUpChat";
 
 const LEVELS: { key: Level; label: string }[] = [
   { key: "kid", label: "Kid" },
@@ -139,12 +141,19 @@ export default function ExplainForm() {
           <label className="text-sm font-medium text-gray-700">
             Concept to explain
           </label>
-          <input
-            value={concept}
-            onChange={(e) => setConcept(e.target.value)}
-            placeholder='e.g., "Recursion", "Quickselect", "Neural Networks"'
-            className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-black/10"
-          />
+          <div className="mt-2 flex gap-2">
+            <input
+              value={concept}
+              onChange={(e) => setConcept(e.target.value)}
+              placeholder='e.g., "Recursion", "Quickselect", "Neural Networks"'
+              className="flex-1 rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-black/10"
+            />
+            <VoiceInput
+              onTranscript={(text) => {
+                setConcept(text);
+              }}
+            />
+          </div>
         </div>
 
         <div className="mt-5">

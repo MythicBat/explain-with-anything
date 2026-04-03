@@ -1,5 +1,4 @@
 import ExplainForm from "@/components/ExplainForm";
-import TutorChat from "@/components/TutorChat";
 
 export default function Page() {
   return (
@@ -8,7 +7,6 @@ export default function Page() {
       <p className="text-center text-xs text-gray-500 mt-10">
         Built for StrathSpace HackDay using Next.js + Gemini + Firebase
       </p>
-      <TutorChat />
     </main>
   );
 }
