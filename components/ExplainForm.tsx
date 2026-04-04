@@ -79,11 +79,11 @@ export default function ExplainForm() {
     }
   } 
 
-  async function generate() {
+  async function generate(themeOverride?: ThemeKey, conceptOverride?: string) {
     setError("");
     setOutput("");
 
-    const trimmed = concept.trim();
+    const trimmed = (conceptOverride ?? concept).trim();
     if (!trimmed) {
       setError("Type a concept first (e.g., recursion, blockchain, DP, inflation).");
       return;
@@ -151,6 +151,9 @@ export default function ExplainForm() {
             <VoiceInput
               onTranscript={(text) => {
                 setConcept(text);
+                setTimeout(() => {
+                  generate(undefined, text);
+                }, 100);
               }}
             />
           </div>
@@ -203,7 +206,7 @@ export default function ExplainForm() {
 
         <div className="mt-5 flex gap-3">
           <button
-            onClick={generate}
+            onClick={() => generate()}
             disabled={loading}
             className={[
               "px-5 py-3 rounded-xl font-medium transition",
@@ -306,6 +309,13 @@ export default function ExplainForm() {
   )}
   </div>
 )}
+  {responseStyle !== "comic" && (
+    <FollowUpChat
+      theme={themeMeta.label}
+      level={level}
+      initialAssistantMessage={output}
+    />
+  )}
     </div>
   );
 }
