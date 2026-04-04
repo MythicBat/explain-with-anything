@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useRef } from "react";
+import { motion } from "framer-motion";
 import ThemeChips from "./ThemeChips";
 import ResultCard from "./ResultCard";
 import { ThemeKey } from "@/lib/themes";
@@ -124,7 +125,12 @@ export default function ExplainForm() {
   }
 
   return (
-    <div className="w-full max-w-3xl mx-auto">
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.6, ease: "easeOut" }}
+      className="w-full max-w-3xl mx-auto"
+    >
       <div className={`rounded-2xl border border-gray-200 bg-linear-to-br ${themeMeta.bg} shadow-sm p-5`}>
         <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
         <p className="text-gray-600 mt-1">
@@ -209,10 +215,10 @@ export default function ExplainForm() {
             onClick={() => generate()}
             disabled={loading}
             className={[
-              "px-5 py-3 rounded-xl font-medium transition",
+              "px-5 py-3 rounded-xl font-medium transition duration-200",
               loading
                 ? "bg-gray-200 text-gray-700"
-                : "bg-black text-white hover:opacity-90",
+                : "bg-black text-white hover:opacity-95 hover:scale-[1.02] hover:shadow-[0_10px_30px_rgba(0,0,0,0.18)]",
             ].join(" ")}
             type="button"
           >
@@ -256,11 +262,24 @@ export default function ExplainForm() {
         </div>
 
         {loading && (
-          <div className="mt-5 rounded-xl border border-gray-100 bg-gray-50 p-4 text-gray-600">
-            <div className="animate-pulse">
-              Gemini is cooking your analogy… 🍳✨
+          <motion.div
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="mt-5 rounded-2xl border border-white/60 bg-white/70 p-4 text-slate-700 shadow-sm backdrop-blur-sm"
+          >
+            <div className="flex items-center gap-3">
+              <motion.div
+                animate={{ rotate: 360 }}
+                transition={{ repeat: Infinity, duration: 2, ease: "linear" }}
+                className="text-xl"
+              >
+                ✨
+              </motion.div>
+              <div className="animate-pulse font-medium">
+                Your Buddy is cooking your analogy...
+              </div>
             </div>
-          </div>
+          </motion.div>
         )}
 
         {shareURL && (
@@ -283,7 +302,12 @@ export default function ExplainForm() {
       </div>
 
       {output && (
-          <div ref={exportRef}>
+          <motion.div 
+            ref={exportRef}
+            initial={{ opacity: 0, y: 18 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.45 }}
+          >
             {responseStyle === "comic" ? (
               (() => {
                 const parsed = safeParseJson<ComicPayload>(output);
@@ -307,7 +331,7 @@ export default function ExplainForm() {
   ) : (
       <ResultCard text={output} onCopy={copy} />
   )}
-  </div>
+  </motion.div>
 )}
   {responseStyle !== "comic" && (
     <FollowUpChat
@@ -316,6 +340,6 @@ export default function ExplainForm() {
       initialAssistantMessage={output}
     />
   )}
-    </div>
+    </motion.div>
   );
 }

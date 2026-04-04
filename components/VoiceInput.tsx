@@ -78,8 +78,8 @@ export default function VoiceInput({ onTranscript }: Props) {
         <button
             type="button"
             onClick={listening ? stopListening : startListening}
-            className={`h-[50px] w-[50px] rounded-xl border flex items-center justify-center text-lg transition ${
-                listening ? "bg-red-500 text-white border-red-500" : "bg-white border-gray-200 hover:bg-gray-50"}`}
+            className={`h-[50px] w-[50px] rounded-xl border flex items-center justify-center text-lg transition duration-200 shadow-sm ${
+                listening ? "bg-red-500 text-white border-red-500 shadow-[0_0_20px_rgba(239,68,68,0.45)]" : "bg-white border-gray-200 hover:bg-gray-50 hover-scale-[1.03] hover:shadow-[0_0_18px_rgba(59,130,246,0.18)]"}`}
                 title={listening ? "Stop recording" : "Start recording"}
             >
             {listening ? "🔴" : "🎤"}
