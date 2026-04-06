@@ -131,13 +131,13 @@ export default function ExplainForm() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full max-w-3xl mx-auto"
     >
-      <div className={`rounded-2xl border border-gray-200 bg-linear-to-br ${themeMeta.bg} shadow-sm p-5`}>
+      <div className={`rounded-[28px] border border-white/60 bg-white/65 bg-linear-to-br ${themeMeta.bg} shadow-[0_20px_60px_rgba(15,23,42,0.08) backdrop-blur-xl p-5 sm:p=6]`}>
         <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
         <p className="text-gray-600 mt-1">
           Turn any concept into a fun analogy with one click.
         </p>
 
-        <div className="mt-3 inline-flex items-center gap-2 rounded-full bg-white/70 px-3 py-1 text-xs border border-gray-200">
+        <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/65 px-3 py-1 text-xs shadow-sm backdrop-blur-md">
           <span>{themeMeta.emoji}</span>
           <span className="font-medium">{themeMeta.label}</span>
           <span className="text-gray-500">{themeMeta.vibe}</span>

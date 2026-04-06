@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import VoiceInput from "./VoiceInput";
+import { motion } from "framer-motion";
 
 type ChatMessage = {
     role: "user" | "assistant";
