@@ -20,9 +20,15 @@ export default function Page() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="min-h-screen bg-[linear-gradient(180deg,#f7fafc,#eef5ff_30%,#f8fafc)] px-4 py-10"
+            className="relative min-h-screen bg-[linear-gradient(180deg,#f7fafc,#eef5ff_30%,#f8fafc)] px-4 py-10 overflow-hidden"
           >
-            <ExplainForm />
+            <div className="pointer-events-none absolute inset-0 overflow-hidden">
+              <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-300/20 blur-3xl"/>
+              <div className="absolute right-10 bottom-20 h-64 w-64 rounded-full bg-fuchsia-300/20 blur-3xl"/>
+            </div>
+            <div className="relative z-10">
+              <ExplainForm />
+            </div>
             <p className="mt-10 text-center text-xs text-slate-500">
               Built for StrathSpace HackDay using Next.js + Gemini + Firebase
             </p>

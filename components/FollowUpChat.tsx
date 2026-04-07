@@ -83,10 +83,13 @@ export default function FollowUpChat({
 
             <div className="max-h-[420px] overflow-y-auto px-5 py-5 bg-gray-50 space-y-4">
                 {messages.map((m, idx) => (
-                    <div
+                    <motion.div
                         key={idx}
-                        className={`max-w-[85%] rounded-2xl px-4 py-3 whitespace-pre-wrap ${
-                            m.role === "user" ? "ml-auto bg-black text-white" : "bg-white border border-gray-200 text-gray-900"
+                        initial={{ opacity: 0, y: 10, scale: 0.98 }}
+                        animate={{ opacity: 1, y: 0, scale: 1 }}
+                        transition={{ duration: 0.25 }}
+                        className={`max-w-[85%] rounded-2xl px-4 py-3 whitespace-pre-wrap shadow-sm ${
+                            m.role === "user" ? "ml-auto bg-black text-white" : "bg-white/85 backrop-blur-sm border border-gray-200 text-gray-900"
                         }`}
                     >
                         <div>{m.text}</div>
@@ -99,7 +102,7 @@ export default function FollowUpChat({
                                     Speak reply 🔊
                             </button>
                         )}
-                    </div>
+                    </motion.div>
                 ))}
 
                 {loading && (

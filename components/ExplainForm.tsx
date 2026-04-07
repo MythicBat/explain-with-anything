@@ -14,6 +14,7 @@ import { normalizeComic } from "@/lib/comicNormalize";
 import { downloadNodeAsPng } from "@/lib/downloadCard";
 import VoiceInput from "./VoiceInput";
 import FollowUpChat from "./FollowUpChat";
+import { celebrateSuccess } from "@/lib/celebrate";
 
 const LEVELS: { key: Level; label: string }[] = [
   { key: "kid", label: "Kid" },
@@ -112,6 +113,7 @@ export default function ExplainForm() {
 
       setResponseStyle(data.style || "");
       setOutput(data.text);
+      celebrateSuccess();
     } catch (e: unknown) {
       setError(e instanceof Error ? e.message : "Something went wrong");
     } finally {

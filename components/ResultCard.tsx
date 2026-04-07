@@ -8,8 +8,8 @@ export default function ResultCard({
   onCopy: () => void;
 }) {
   return (
-    <div className="mt-6 rounded-2xl border border-gray-200 bg-white shadow-sm overflow-hidden">
-      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100">
+    <div className="mt-6 rounded-[28px] border border-white/70 bg-white/80 shadow-[0_20px_50px_rgba(15,23,42,0.08)] backrop-blur-xl overflow-hidden">
+      <div className="flex items-center justify-between px-5 py-4 border-b border-gray-100/80">
         <div>
           <p className="text-sm text-gray-500">Your explanation</p>
           <h2 className="text-lg font-semibold">Explain It With Anything ✨</h2>
