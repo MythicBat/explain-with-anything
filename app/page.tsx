@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import ExplainForm from "@/components/ExplainForm";
 import SplashScreen from "@/components/SplashScreen";
+import StudyBuddyOrb from "@/components/StudyBuddyOrb";
 
 export default function Page() {
   const [started, setStarted] = useState(false);
@@ -29,6 +30,8 @@ export default function Page() {
             <div className="relative z-10">
               <ExplainForm />
             </div>
+            
+            <StudyBuddyOrb />
             <p className="mt-10 text-center text-xs text-slate-500">
               Built for StrathSpace HackDay using Next.js + Gemini + Firebase
             </p>
