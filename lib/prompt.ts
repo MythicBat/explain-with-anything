@@ -39,8 +39,7 @@ export function buildPrompt({ concept, theme, level, style} : ExplainInput) {
     1) One-liner (tweet-length)
     2) Main analogy explanation (6-10 sentences)
     3) Tiny example (3-6 lines)
-    4) 3 quick quiz questions
-    5) Common misconceptions + corrections (2-4 sentences)
+    4) Common misconceptions + corrections (2-4 sentences)
     
     Rules:
     - Be accurate (no made-up facts).
