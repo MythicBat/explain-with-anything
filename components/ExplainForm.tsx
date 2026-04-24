@@ -14,7 +14,7 @@ import type { ComicPayload } from "@/lib/types";
 import { normalizeComic } from "@/lib/comicNormalize";
 import { downloadNodeAsPng } from "@/lib/downloadCard";
 import VoiceInput from "./VoiceInput";
-import FollowUpChat from "./FollowUpChat";
+import VoiceBuddyTutor from "./VoiceBuddyTutor";
 import { celebrateSuccess } from "@/lib/celebrate";
 
 const LEVELS: { key: Level; label: string }[] = [
@@ -348,13 +348,12 @@ export default function ExplainForm() {
   )}
   </motion.div>
 )}
-  {responseStyle !== "comic" && (
-    <FollowUpChat
-      theme={themeMeta.label}
-      level={level}
-      initialAssistantMessage={output}
-    />
-  )}
+      <VoiceBuddyTutor
+        enabled={!!output && responseStyle !== "comic"}
+        theme={themeMeta.label}
+        level={level}
+        initialContext={output}
+      />
     </motion.div>
   );
 }

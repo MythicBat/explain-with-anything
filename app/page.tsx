@@ -4,7 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import ExplainForm from "@/components/ExplainForm";
 import SplashScreen from "@/components/SplashScreen";
-import StudyBuddyOrb from "@/components/StudyBuddyOrb";
+import InteractiveParticles from "@/components/InteractiveParticles";
 
 export default function Page() {
   const [started, setStarted] = useState(false);
@@ -21,18 +21,23 @@ export default function Page() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.6, ease: "easeOut" }}
-            className="relative min-h-screen bg-[linear-gradient(180deg,#f7fafc,#eef5ff_30%,#f8fafc)] px-4 py-10 overflow-hidden"
+            className="relative min-h-screen overflow-hidden bg-[#050816] px-4 py-10 text-white"
           >
+            {/* ✅ 3D particles */}
+            <InteractiveParticles />
+
+            {/* glow blobs */}
             <div className="pointer-events-none absolute inset-0 overflow-hidden">
               <div className="absolute left-1/2 top-20 h-72 w-72 -translate-x-1/2 rounded-full bg-cyan-300/20 blur-3xl"/>
               <div className="absolute right-10 bottom-20 h-64 w-64 rounded-full bg-fuchsia-300/20 blur-3xl"/>
             </div>
+
+            {/* main UI */}
             <div className="relative z-10">
               <ExplainForm />
             </div>
-            
-            <StudyBuddyOrb />
-            <p className="mt-10 text-center text-xs text-slate-500">
+
+            <p className="mt-10 text-center text-xs text-slate-400">
               Built for StrathSpace HackDay using Next.js + Gemini + Firebase
             </p>
           </motion.div>
