@@ -1,6 +1,7 @@
 "use client";
 
 import { useMemo, useState, useRef } from "react";
+import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 import ThemeChips from "./ThemeChips";
 import ResultCard from "./ResultCard";
@@ -133,11 +134,22 @@ export default function ExplainForm() {
       transition={{ duration: 0.6, ease: "easeOut" }}
       className="w-full max-w-3xl mx-auto"
     >
-      <div className={`rounded-[28px] border border-white/60 bg-white/65 bg-linear-to-br ${themeMeta.bg} shadow-[0_20px_60px_rgba(15,23,42,0.08) backdrop-blur-xl p-5 sm:p=6]`}>
-        <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
-        <p className="text-gray-600 mt-1">
-          Turn any concept into a fun analogy with one click.
-        </p>
+      <Tilt
+        tiltMaxAngleX={4}
+        tiltMaxAngleY={4}
+        perspective={1200}
+        scale={1.01}
+        transitionSpeed={900}
+        glareEnable
+        glareMaxOpacity={0.12}
+        glareColor="#ffffff"
+        glarePosition="all"
+      >
+        <div className={`rounded-[28px] border border-white/60 bg-white/65 bg-linear-to-br ${themeMeta.bg} shadow-[0_20px_60px_rgba(15,23,42,0.08) backdrop-blur-xl p-5 sm:p=6]`}>
+          <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
+          <p className="text-gray-600 mt-1">
+            Turn any concept into a fun analogy with one click.
+          </p>
 
         <div className="mt-3 inline-flex items-center gap-2 rounded-full border border-white/70 bg-white/65 px-3 py-1 text-xs shadow-sm backdrop-blur-md">
           <span>{themeMeta.emoji}</span>
@@ -302,6 +314,7 @@ export default function ExplainForm() {
           </div>
         )}
       </div>
+    </Tilt>
 
       {output && (
           <motion.div 
