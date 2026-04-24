@@ -5,7 +5,7 @@ import { Sparkles, ArrowRight } from "lucide-react";
 import AnimatedBackground from "./AnimatedBackground";
 import FloatingEmojis from "./FloatingEmojis";
 import InteractiveParticles from "./InteractiveParticles";
-import StudyBuddy3D from "./StudyBuddy3D";
+import HumanStudyBuddy from "./HumanStudyBuddy";
 
 export default function SplashScreen({
   onStart,
@@ -38,7 +38,7 @@ export default function SplashScreen({
               transition={{ delay: 0.2, duration: 0.6 }}
               className="mx-auto flex h-24 w-24 items-center justify-center rounded-[28px] border border-cyan-300/30 bg-white/10 text-5xl shadow-[0_0_35px_rgba(34,211,238,0.22)]"
             >
-              <StudyBuddy3D />
+              <HumanStudyBuddy />
             </motion.div>
 
             <motion.div
