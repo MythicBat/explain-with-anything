@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Sparkles, ArrowRight } from "lucide-react";
 import AnimatedBackground from "./AnimatedBackground";
 import FloatingEmojis from "./FloatingEmojis";
+import InteractiveParticles from "./InteractiveParticles";
 
 export default function SplashScreen({
   onStart,
@@ -19,6 +20,7 @@ export default function SplashScreen({
       className="relative min-h-screen overflow-hidden text-white"
     >
       <AnimatedBackground />
+      <InteractiveParticles />
       <FloatingEmojis />
 
       <div className="relative z-10 flex min-h-screen items-center justify-center px-4">
