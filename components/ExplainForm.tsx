@@ -145,7 +145,7 @@ export default function ExplainForm() {
         glareColor="#ffffff"
         glarePosition="all"
       >
-        <div className={`rounded-[28px] border border-white/60 bg-white/65 bg-linear-to-br ${themeMeta.bg} shadow-[0_20px_60px_rgba(15,23,42,0.08) backdrop-blur-xl p-5 sm:p=6]`}>
+        <div className={`rounded-[28px] border border-white/60 bg-white/80 bg-linear-to-br ${themeMeta.bg} text-slate-900 shadow-[0_20px_60px_rgba(15,23,42,0.08) backdrop-blur-xl p-5 sm:p=6]`}>
           <h1 className="text-2xl font-bold">Explain It With Anything ✨</h1>
           <p className="text-gray-600 mt-1">
             Turn any concept into a fun analogy with one click.
@@ -166,7 +166,7 @@ export default function ExplainForm() {
               value={concept}
               onChange={(e) => setConcept(e.target.value)}
               placeholder='e.g., "Recursion", "Quickselect", "Neural Networks"'
-              className="flex-1 rounded-xl border border-gray-200 px-4 py-3 outline-none focus:ring-2 focus:ring-black/10"
+              className="flex-1 rounded-xl border border-gray-200 px-4 py-3 text-slate-900 placeholder:text-slate-400 outline-none focus:ring-2 focus:ring-black/10"
             />
             <VoiceInput
               onTranscript={(text) => {
@@ -192,7 +192,7 @@ export default function ExplainForm() {
             <select
               value={level}
               onChange={(e) => setLevel(e.target.value as Level)}
-              className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 bg-white"
+              className="mt-2 w-full rounded-xl border border-gray-200 px-4 py-3 bg-white text-slate-900"
             >
               {LEVELS.map((l) => (
                 <option key={l.key} value={l.key}>
