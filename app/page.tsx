@@ -1,13 +1,17 @@
 "use client";
 
 import { AnimatePresence, motion } from "framer-motion";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import ExplainForm from "@/components/ExplainForm";
 import SplashScreen from "@/components/SplashScreen";
 import InteractiveParticles from "@/components/InteractiveParticles";
+import DashboardPanel from "@/components/DashboardPanel";
+import type { Style } from "@/lib/types";
 
 export default function Page() {
   const [started, setStarted] = useState(false);
+  const setConceptRef = useRef<(value: string) => void | null>(null);
+  const setStyleRef = useRef<(value: Style) => void | null>(null);
 
   return (
     <main className="min-h-screen">
@@ -33,8 +37,18 @@ export default function Page() {
             </div>
 
             {/* main UI */}
-            <div className="relative z-10">
-              <ExplainForm />
+            <div className="relative z-10 mx-auto grid w-full max-w-7xl grid-cols-1 gap-6 lg:grid-cols-[1.4fr_0.8fr]">
+              <ExplainForm
+                externalSetConcept={(setter) => {
+                  setConceptRef.current = setter;
+                }}
+                externalSetStyle={(setter) => {
+                  setStyleRef.current = setter;
+                }}
+              />
+              <DashboardPanel 
+                setConcept={(value) => setConceptRef.current?.(value)} 
+                setStyle={(value) => setStyleRef.current?.(value)} />
             </div>
 
             <p className="mt-10 text-center text-xs text-slate-400">

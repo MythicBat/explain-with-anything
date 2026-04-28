@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useRef } from "react";
+import { useMemo, useState, useRef, useEffect } from "react";
 import Tilt from "react-parallax-tilt";
 import { motion } from "framer-motion";
 import ThemeChips from "./ThemeChips";
@@ -34,7 +34,13 @@ const STYLES: { key: Style; label: string }[] = [
   { key: "comic", label: "Comic Script" },
 ];
 
-export default function ExplainForm() {
+export default function ExplainForm({
+  externalSetConcept,
+  externalSetStyle,
+}: {
+  externalSetConcept?: (setter: (value: string) => void) => void;
+  externalSetStyle?: (setter: (value: Style) => void) => void;
+}) {
   const [concept, setConcept] = useState("");
   const [theme, setTheme] = useState<ThemeKey>("minecraft");
   const [level, setLevel] = useState<Level>("high-school");
@@ -45,6 +51,11 @@ export default function ExplainForm() {
   const [loading, setLoading] = useState(false);
   const [output, setOutput] = useState<string>("");
   const [error, setError] = useState<string>("");
+
+  useEffect(() => {
+    externalSetConcept?.(setConcept);
+    externalSetStyle?.(setStyle);
+  }, [externalSetConcept, externalSetStyle]);
 
   const themeMeta = useMemo(
     () => getThemeMeta(theme),
